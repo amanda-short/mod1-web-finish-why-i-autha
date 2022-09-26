@@ -8,13 +8,18 @@ const changeType = authForm.querySelector('a');
 const errorDisplay = authForm.querySelector('.error');
 
 // check the query params for a redirect Url (page before auth redirect)
-const params = new URLSearchParams(location.search);
-const redirectUrl = params.get('redirectUrl') || '../';
+// const params = new URLSearchParams(location.search);
+
+const redirectUrl = '../profile/index.html';
 
 // > Part C: If user directly navigated to /auth, but we have a user, go back
 // (they need to sign out first before coming here)
 //      - get the user
+
 //      - replace location with redirectUrl
+const user = getUser();
+if (user) location.replace(redirectUrl);
+
 
 // Sign up options
 const signUpType = {
@@ -71,9 +76,10 @@ authForm.addEventListener('submit', async (e) => {
 
     // > Part A:
     //      - get formData object from form
+    const formData = new FormData(authForm);
     //      - call "authType.action" passing in the email and password from
+    const response = await authType.action(formData.get('email'), formData.get('password'));
     //        the form data and assign to response variable
-
     const error = response.error;
 
     if (error) {
@@ -84,5 +90,6 @@ authForm.addEventListener('submit', async (e) => {
     } else {
         // go back to wherever user came from
         // > Part A using "location", replace url with "redirectUrl"
+        location.replace(redirectUrl);
     }
 });
