@@ -30,3 +30,18 @@ export async function signOutUser() {
     // > Part B: supabase signout
     return await client.auth.signOut();
 }
+
+    // > Part C
+
+export async function updateProfile(profile) {
+    return await client.from('profiles').upsert(profile).single();
+}
+
+export async function getProfile(id) {
+    const response = await client.from('profiles').select().match({ id }).maybeSingle();
+    return response;
+}
+
+export async function getProfiles() {
+    return await client.from('profiles').select();
+}
