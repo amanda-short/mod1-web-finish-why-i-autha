@@ -1,4 +1,4 @@
-import { getUser, signOutUser } from '../fetch-utils.js';
+import { getUser, signOutUser, getProfile } from '../fetch-utils.js';
 
 const signOutLink = document.getElementById('sign-out-link');
 
@@ -11,8 +11,8 @@ const signOutLink = document.getElementById('sign-out-link');
 const user = getUser();
 if (!user) {
     const base =
-        location.pathname === '/' || location.pathname === '/solutions-web/user-auth/'
-            ? './'
+        location.pathname === '/' || location.pathname === '/auth/user.js' 
+            ? './' 
             : '../';
     location.replace(`${base}auth/?redirectUrl=${encodeURIComponent(location)}`);
 }
@@ -40,7 +40,4 @@ window.addEventListener('load', async () => {
 });
 
 function displayProfile() {
-    if (userAvatar && profile && profile.avatar_url) {
-        userAvatar.src = profile.avatar_url;
-    }
 }
